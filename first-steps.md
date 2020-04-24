@@ -217,13 +217,13 @@ void whenAssertingException_thenThrown() {
 
 Khi xây dựng phần mềm, SUT sẽ phụ thuộc vào các thành phần bên ngoài như cơ sở dữ liệu, API, hệ thống file,... Các thành phần phụ thuộc này có thể chưa sẵn sàng hoặc thậm chí chưa tồn tại ở thời điểm chúng ta viết Unit Test. Ngay cả khi những thành phần này đã được chuẩn bị sẵn sàng thì việc thực thi một test case có phụ thuộc sẽ chậm hơn vì phải cần thời gian đợi và tương tác với thành phần bên ngoài.
 
-Cô lập SUT là một trong những kỹ thuật giúp giải quyết vấn đề trên. Và lúc này, chúng ta sẽ phải cần đến các Mocking framework (tạm dịch là khung mô phỏng) để giả lập các thành phần bên ngoài, nhờ đó có thể cô lập và kiểm thử SUT dễ dàng hơn. Việc tìm hiểu cách thiết lập và sử dụng các mocking framework này là bước quan trọng giúp mở rộng Unit Test cho các hệ thống lớn và phức tạp.
+![thành phần phụ thuộc](_img/mock_diagram.png)
 
-Mockito là một mocking framework dành cho Java.
+Cô lập SUT là một trong những kỹ thuật giúp giải quyết vấn đề trên. Và lúc này, chúng ta sẽ phải cần đến các mocking framework (tạm dịch là khung mô phỏng) để giả lập các thành phần bên ngoài, nhờ đó có thể cô lập và kiểm thử SUT dễ dàng hơn. Đối tượng mô phỏng này sẽ không gây phá vỡ cấu trúc mã nguồn khi đối tượng thật được thiết kế và triển khai.  Hình dưới đây thể hiện việc tạo hai đối tượng mô phỏng là Mock WS và Mock DB để thay thế sự phụ thuộc vào WebService và Database.
 
-### Lợi ích sử dụng
+![thành phần phụ thuộc](_img/mock_diagram_using.png)
 
-* Đối tượng mô phỏng không gây phá vỡ cấu trúc mã nguồn khi đối tượng thật được thiết kế và triển khai.
+Việc tìm hiểu cách thiết lập và sử dụng các mocking framework này là bước quan trọng giúp mở rộng Unit Test cho các hệ thống lớn và phức tạp. Với lập trì viên Java, Mockito là một công cụ không thể thiếu.
 
 ###  Tạo đối tượng mô phỏng
 
@@ -344,6 +344,7 @@ Câu châm ngôn của mình là "Thế giới này thật là rộng lớn.. v�
 
 ### Sách nên tham khảo
 
+* Test Driven Development: By Example - Tác giả: Kent Beck
+* The Art of Unit Testing - 
+
 ### Website nên tham khảo
-
-

@@ -37,7 +37,7 @@ Sau khi thực hiện khối lệnh cần kiểm thử, chúng ta sẽ nhận đ
 
 ### Mock và Stub
 
-Đây là các thành phần bên ngoài được mô phỏng hoặc giả lập trong ngữ cảnh của hoạt động kiểm thử. Thông thường, để SUT hoạt động đúng chức năng thì sẽ cần đến những thành phần bên ngoài như Web Service, Database,... Ở cấp độ unit test, chúng ta cần phải tách rời các thành phần phụ thuộc này để có thể dễ dàng thực thi test case. Phần này sẽ được giải thích rõ hơn trong mục `Sử dụng Mockito (Mocking framework)`.
+Đây là các thành phần bên ngoài được mô phỏng hoặc giả lập trong ngữ cảnh của hoạt động kiểm thử. Thông thường, để AUT hoạt động đúng chức năng thì sẽ cần đến những thành phần bên ngoài như Web Service, Database,... Ở cấp độ unit test, chúng ta cần phải tách rời các thành phần phụ thuộc này để có thể dễ dàng thực thi test case. Phần này sẽ được giải thích rõ hơn trong mục `Sử dụng Mockito (Mocking framework)`.
 
 Lưu ý: Ngoài thuật ngữ mock và stub, thỉnh thoảng bạn sẽ gặp các thuật ngữ khác như Spy và Fake. Mặc dù có phần khác nhau về khái niệm nhưng chúng ta sẽ tạm thời cần biết về Mock và Stub.
 
@@ -288,11 +288,11 @@ void whenAssertingException_thenThrown() {
 
 ## Sử dụng Mockito (Mocking framework)
 
-Khi xây dựng phần mềm, SUT sẽ phụ thuộc vào các thành phần bên ngoài như cơ sở dữ liệu, API, hệ thống file,... Các thành phần phụ thuộc này có thể chưa sẵn sàng hoặc thậm chí chưa tồn tại ở thời điểm chúng ta viết Unit Test. Ngay cả khi những thành phần này đã được chuẩn bị sẵn sàng thì việc thực thi một test case có phụ thuộc sẽ chậm hơn vì phải cần thời gian đợi và tương tác với thành phần bên ngoài.
+Khi xây dựng phần mềm, AUT sẽ phụ thuộc vào các thành phần bên ngoài như cơ sở dữ liệu, API, hệ thống file,... Các thành phần phụ thuộc này có thể chưa sẵn sàng hoặc thậm chí chưa tồn tại ở thời điểm chúng ta viết Unit Test. Ngay cả khi những thành phần này đã được chuẩn bị sẵn sàng thì việc thực thi một test case có phụ thuộc sẽ chậm hơn vì phải cần thời gian đợi và tương tác với thành phần bên ngoài.
 
 ![thành phần phụ thuộc](_img/mock_diagram.png)
 
-Cô lập SUT là một trong những kỹ thuật giúp giải quyết vấn đề trên. Và lúc này, chúng ta sẽ phải cần đến các mocking framework (tạm dịch là khung mô phỏng) để giả lập các thành phần bên ngoài, nhờ đó có thể cô lập và kiểm thử SUT dễ dàng hơn. Đối tượng mô phỏng này sẽ không gây phá vỡ cấu trúc mã nguồn khi đối tượng thật được thiết kế và triển khai.  Hình dưới đây thể hiện việc tạo hai đối tượng mô phỏng là Mock WS và Mock DB để thay thế sự phụ thuộc vào WebService và Database.
+Cô lập AUT là một trong những kỹ thuật giúp giải quyết vấn đề trên. Và lúc này, chúng ta sẽ phải cần đến các mocking framework (tạm dịch là khung mô phỏng) để giả lập các thành phần bên ngoài, nhờ đó có thể cô lập và kiểm thử AUT dễ dàng hơn. Đối tượng mô phỏng này sẽ không gây phá vỡ cấu trúc mã nguồn khi đối tượng thật được thiết kế và triển khai.  Hình dưới đây thể hiện việc tạo hai đối tượng mô phỏng là Mock WS và Mock DB để thay thế sự phụ thuộc vào WebService và Database.
 
 ![thành phần phụ thuộc](_img/mock_diagram_using.png)
 

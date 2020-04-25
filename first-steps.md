@@ -31,9 +31,9 @@ Test case là các trường hợp cần kiểm thử với đầu vào và đ�
 
 Sau khi thực hiện khối lệnh cần kiểm thử, chúng ta sẽ nhận được `actual value`. Lấy giá trị đó so sánh với `expected value`. Nếu hai giá trị này trùng khớp nhau thì kết quả của test case là `PASS`. Ngược lại, kết quả là `FAIL`.
 
-### System Under Test (SUT)
+### Application (hoặc Code) Under Test
 
-SUT hoặc AUT (Application Under Test) là thuật ngữ thường được dùng để chỉ đến hệ thống/ừng dụng đang được kiểm thử. Với hoạt động unit test, các đơn vị kiểm thử của chúng ta là những thành phần nhỏ nhất trong hệ thống nên có thể dùng các thuật ngữ khác phù hợp hơn như Code Under Test (CUT), hoặc OUT (Object Under Test).
+ Application Under Test (AUT)) là thuật ngữ thường được dùng để chỉ đến hệ thống/ừng dụng đang được kiểm thử. Với hoạt động unit test, các đơn vị kiểm thử của chúng ta là những thành phần nhỏ nhất trong hệ thống nên có thể dùng các thuật ngữ khác phù hợp hơn như Code Under Test (CUT), hoặc OUT (Object Under Test).
 
 ### Mock và Stub
 
@@ -90,6 +90,40 @@ Một ca kiểm thử tốt sẽ có những đặc tính sau đây:
 * Khi kết quả kiểm thử thất bại (FAILED), có thể dễ dàng tìm ra giá trị mong đợi và nhanh chóng xác định được vấn đề.
 
 ### Nguyên tắc viết kiểm thử
+
+1. Mỗi test case là một phương thức độc lập, có thể thực thi mà không phụ thuộc vào bất kỳ test case nào khác.
+2. Thứ tự thực hiện của mỗi test case không được ảnh hưởng đến kết quả thực thi.
+
+### Quy ước đặt tên
+
+#### Tên lớp chứa mã kiểm thử
+
+Tên lớp chứa mã kiểm thử thường sử dụng hậu tố "Test" sau tên lớp được kiểm thử. Ví dụ: tên lớp là StockService thì tên lớp chứa mã kiểm thử sẽ là StockServiceTest.
+
+#### Tên phương thức kiểm thử (test case)
+
+Theo nguyên tắc, tên phương thức kiểm thử phải giải thích nhiệm vụ rõ ràng. Có thể tham khảo một số quy ướt đặt tên cho phương thức như sau:
+
+1. Sử dụng từ **should**. Ví dụ: **favouriteStocksShouldbeSaved**, **todayPriceShouldBeShowed**.
+
+```java
+@Test
+public void favouriteStocksShouldbeSaved() {}
+```
+
+2. Viết theo mẫu **Given[Đầu-Vào]When[Hành-Vi]Then[Kết-Quả-Mong-Đợi]**. Ví dụ:
+
+```java
+@Test
+public void GivenNullUsernameWhenCreateStudentThenShouldThrowException() {}
+```
+
+3. Viết theo mẫu **when[hành-vi]_then[Kết-quả]**
+
+```java
+@Test
+public void whenEnterValidUsernameAndPassword_thenLoginSuccessfully() {}
+```
 
 ## Sử dụng JUnit
 

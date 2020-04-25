@@ -57,9 +57,9 @@ Các trúc mã mà chúng ta nên tuân thủ trong một test case là `cấu t
 
 ### Thành phần cố định (Fixture)
 
-Là những thành phần được lặp đi lặp lại qua mỗi test case và có thể chia sẻ các thao tác chung giữa các test case này trong một bộ test. Ví dụ: thiết lập cấu hình hoặc chuẩn bị dữ liệu trước khi bộ test được thực thi, và dọn dẹp bộ nhớ sau khi hoàn thành. Thành phần cố định phải được đặt lên trên cùng của bộ kiểm thử.
+Là những thành phần được lặp đi lặp lại qua mỗi test case và có thể chia sẻ các thao tác chung giữa các test case. Ví dụ: thiết lập cấu hình hoặc chuẩn bị dữ liệu trước khi bộ test được thực thi, và dọn dẹp bộ nhớ sau khi hoàn thành. Thành phần cố định phải được đặt lên trên cùng của bộ kiểm thử.
 
-### Đặc tính của một Unit Test tốt
+### Đặc tính của một unit test tốt
 
 Một ca kiểm thử tốt sẽ có những đặc tính sau đây:
 

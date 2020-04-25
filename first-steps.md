@@ -9,6 +9,15 @@ Unit Test (Kiểm thử đơn vị) là kỹ thuật kiểm thử những khối
 
 Với nhiều lập trình viên, dù mới vào nghề hay đã gạo cội, thì unit test là một trong những kỹ năng không thể thiếu khi làm việc. Nếu bạn chưa từng nghe qua hoặc chưa có điều kiện thực hành thì cùng bước những bước chân đầu tiên qua bài viết này nhé!
 
+## Bài viết này có gì
+
+Với bài viết này, bạn học được những nội dung sau:
+
+* Một số khái niệm cơ bản trong hoạt động testing và unit testing
+* Sử dụng JUnit trong dự án Java nói chung
+* Kết hợp Mockito và JUnit để thực hiện việc kiểm thử trong một số tình huống thực tế
+* Case Study và những bài học khi thực hiện kiểm thử
+
 ## Thuật ngữ
 
 Để đọc hiểu nội dung hướng dẫn này, bạn cần biết đến một số thuật ngữ thường được sử dụng trong các hoạt động kiểm thử.

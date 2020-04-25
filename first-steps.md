@@ -98,7 +98,7 @@ Một ca kiểm thử tốt sẽ có những đặc tính sau đây:
 
 #### Tên lớp chứa mã kiểm thử
 
-Tên lớp chứa mã kiểm thử thường sử dụng hậu tố "Test" sau tên lớp được kiểm thử. Ví dụ: tên lớp là StockService thì tên lớp chứa mã kiểm thử sẽ là StockServiceTest.
+Tên lớp chứa mã kiểm thử thường sử dụng hậu tố "Tests" sau tên lớp được kiểm thử. Ví dụ: tên lớp là StockService thì tên lớp chứa mã kiểm thử sẽ là StockServiceTests.
 
 #### Tên phương thức kiểm thử (test case)
 
@@ -130,6 +130,35 @@ public void whenEnterValidUsernameAndPassword_thenLoginSuccessfully() {}
 Hiện nay, JUnit được tích hợp và hỗ trợ ở phần lớn các IDE hiện tại cho Java. Việc sử dụng JUnit trong các dự án Java không khó. Các bạn có thể tìm hiểu cách cài đặt thư viện cho dự án của mình qua những hướng dẫn trên mạng.
 
 Trong mục này, chúng ta sẽ cùng lượt qua những tính năng được hỗ trợ trong JUnit 5 - phiên bản mới nhất hiện nay.
+
+### Ví dụ đầu tiên
+
+Dưới đây là ví dụ giúp bạn có cái nhìn tổng quan về một kiểm thử được viết với JUnit5:
+
+```java
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import com.codegym.Calculator;
+import org.junit.jupiter.api.Test;
+
+class CalculatorTests {
+
+    private final Calculator calculator = new Calculator();
+
+    @Test
+    void shouldReturn2When1Plus1() {
+        assertEquals(2, calculator.add(1, 1));
+    }
+}
+```
+
+Giải thích ví dụ:
+
+* `@Test` là annotation đánh dấu phương thức `shouldReturn2When1Plus1()` là một test case.
+* Ở phần thân của phương thức chứa một dòng mã kiểm tra kết quả của phương thức `add()` với đầu vào là hai toán hạng có giá trị là `1` và `1`.
+* So sánh giá trị thực tế trả về của phương `add()` với giá trị mong đợi là `2`.
+* Sau khi chạy test case này, kết quả sẽ là `PASS` nếu phương thức `add(1, 1))` trả  về kết quả đúng bằng `2`.
+
+Các mục tiếp theo sẽ cung cấp thêm chi tiết về một số tính năng cơ bản được hỗ trợ trong JUnit5.
 
 ### Các annotation trong JUnit
 

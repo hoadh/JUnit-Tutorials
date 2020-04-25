@@ -59,6 +59,24 @@ Các trúc mã mà chúng ta nên tuân thủ trong một test case là `cấu t
 
 Là những thành phần được lặp đi lặp lại qua mỗi test case và có thể chia sẻ các thao tác chung giữa các test case. Ví dụ: thiết lập cấu hình hoặc chuẩn bị dữ liệu trước khi bộ test được thực thi, và dọn dẹp bộ nhớ sau khi hoàn thành. Thành phần cố định phải được đặt lên trên cùng của bộ kiểm thử.
 
+Có hai loại thành phần cố định chính:
+
+#### Setup
+
+Là thành phần được thực thi trước khi test case thực thi. Trong một số thư viện xUnit (công cụ hỗ trợ viết và thực thi unit test), chúng ta thường gặp những phương thức/hàm, hoặc annotion có tên là `beforeEach`. Thành phần này chính là **Setup**.
+
+#### One-Time Setup
+
+Là thành phần được thực thi đầu tiên (trước cả khi cả `setup` và `test case` được thực thi). Trong một số thư viện xUnit (công cụ hỗ trợ viết và thực thi unit test), chúng ta thưsờng gặp những phương thức/hàm, hoặc annotion có tên là `beforeAll`. Thành phần này chính là **One-Time Setup**.
+
+#### Teardown
+
+Là thành phần được thực thi sau khi `test case` được thực thi. Trong một số thư viện xUnit (công cụ hỗ trợ viết và thực thi unit test), chúng ta thường gặp những phương thức/hàm, hoặc annotion có tên là `afterEach`. Thành phần này chính là **Teardown**.
+
+#### One-Time Teardown
+
+Là thành phần được thực thi sau cùng (sau khi tất cả `test case` và `teardown` được thực thi). Trong một số thư viện xUnit (công cụ hỗ trợ viết và thực thi unit test), chúng ta thường gặp những phương thức/hàm, hoặc annotion có tên là `afterAll`. Thành phần này chính là **One-Time Teardown**.
+
 ### Đặc tính của một unit test tốt
 
 Một ca kiểm thử tốt sẽ có những đặc tính sau đây:

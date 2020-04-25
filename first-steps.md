@@ -166,9 +166,7 @@ Sơ đồ dưới đây thể hiện thứ tự thực hiện các phương th�
 
 ![quá trình thực hiện](_img/junit_annotations_2.png)
 
-Các annotaion `@BeforeAll`, `@BeforeEach`,`@AfterEach`, `@AfterAll` là những **thành phần cố định**. Thực hiện các chức năng lặp đi lặp lại.
-
-Annotation `@Test` được dùng để xác định một test case.
+Các annotaion `@BeforeAll`, `@BeforeEach`,`@AfterEach`, `@AfterAll` là những **thành phần cố định**, thực hiện các chức năng lặp đi lặp lại. Annotation `@Test` được dùng để xác định một test case.
 
 ### Assertions
 

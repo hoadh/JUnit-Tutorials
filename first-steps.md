@@ -3,37 +3,48 @@
 > “Hành trình vạn dặm bắt đầu từ một bước chân.” - Lão Tử
 
 ## Giới thiệu
-Chất lượng công việc là một trong những yếu tố quan trọng xác định thành công của bạn tại nơi làm việc. Có nhiều cách để làm điều này trong lĩnh vực công nghệ phần mềm. Nhưng có một cách dễ dàng và hiệu quả là áp dụng kiểm thử. Lý do đơn giản là vì việc tạo mã chất lượng quan trọng hơn nhiều so với việc tạo ra một khối lượng lớn mã khó bảo trì và tồn tại nhiều lỗi.
+Chất lượng công việc là một trong những yếu tố quan trọng xác định thành công của bạn tại nơi làm việc. Có nhiều cách để làm điều này trong lĩnh vực công nghệ phần mềm. Nhưng có một cách dễ dàng và hiệu quả là áp dụng kiểm thử. Lý do đơn giản là khả năng viết mã đạt chất lượng thường quan trọng hơn nhiều so với việc viết một khối lượng lớn mã khó bảo trì và tồn tại nhiều lỗi.
 
-Unit Test (Kiểm thử đơn vị) là một kỹ thuật kiểm thử hướng tới các đối tượng là những khối thành phần nhỏ nhất trong phần mềm (thường là các hàm hoặc phương thức). Đây là một trong những cấp độ kiểm thử đơn giản và có thể bắt đầu sớm trong vòng đời phát triển phần mềm. Thậm chí bạn có thể viết unit test trước khi viết mã. Tuy nhiên, đây không phải là một thuật ngữ mới trong lĩnh vực phần mềm.  Khái niệm unit test xuất hiện lần đầu trong ngôn ngữ lập trình Smalltalk vào những năm 1970. Đến nay, unit test gần như đã trở thành một chuẩn mực trong ngành bởi mục đích của nó là phục vụ yêu cầu nâng cao chất lượng sản phẩm phần mềm.
+Unit Test (Kiểm thử đơn vị) là kỹ thuật kiểm thử những khối thành phần nhỏ nhất trong phần mềm (thường là các hàm hoặc phương thức). Đây là một trong những cấp độ kiểm thử đơn giản và có thể bắt đầu sớm trong vòng đời phát triển phần mềm. Thậm chí, bạn có thể viết unit test trước khi viết mã. Tuy nhiên, đây không phải là một thuật ngữ mới trong lĩnh vực phần mềm.  Khái niệm unit test xuất hiện lần đầu trong ngôn ngữ lập trình Smalltalk vào những năm 1970. Đến nay, unit test gần như đã trở thành một chuẩn mực trong ngành bởi mục đích của nó là phục vụ yêu cầu nâng cao chất lượng sản phẩm phần mềm.
 
-Đối với nhiều lập trình viên, dù mới vào nghề hay đã gạo cội thì unit test là một trong những kỹ năng không thể thiếu khi làm việc. Nếu bạn chưa từng nghe qua, hoặc chưa có điều kiện thực hành thì cũng bước những bước chân đầu tiên vào công việc thú vị này qua bài viết này nhé!
+Với nhiều lập trình viên, dù mới vào nghề hay đã gạo cội, thì unit test là một trong những kỹ năng không thể thiếu khi làm việc. Nếu bạn chưa từng nghe qua hoặc chưa có điều kiện thực hành thì cùng bước những bước chân đầu tiên qua bài viết này nhé!
 
 ## Thuật ngữ
 
-Trước hết, chúng ta lượt qua một vài từ khoá có thể được sử dụng trong bài viết này.
+Để đọc hiểu nội dung hướng dẫn này, bạn cần biết đến một số thuật ngữ thường được sử dụng trong các hoạt động kiểm thử.
 
-* Test case - ca kiểm thử hoặc trường hợp kiểm thử
-* Expected value - Giá trị mong đợi
-* Actual value - Giá trị thực tế
-* Mock, Stub, Spy, Fake - Các chức năng được mô phỏng hoặc giả lập trong bộ kiểm thử
-* SUT (System Under Test), CUT (Code Under Test), OUT (Object Under Test) - Là các đối tượng đang được kiểm thử. Như: hệ thống, mã, đối tượng.
+### Test case
+
+Test case là các trường hợp cần kiểm thử với đầu vào và đầu ra được xác định cụ thể. Một test case thường có hai thành phần dưới đây:
+
+* Expected value: Giá trị mà chúng ta mong đợi khối lệnh trả về
+* Actual value: Giá trị thực tế mà khối lệnh trả về
+
+Sau khi thực hiện khối lệnh cần kiểm thử, chúng ta sẽ nhận được `actual value`. Lấy giá trị đó so sánh với `expected value`. Nếu hai giá trị này trùng khớp nhau thì kết quả của test case là `PASS`. Ngược lại, kết quả là `FAIL`.
+
+### System Under Test (SUT)
+
+SUT hoặc AUT (Application Under Test) là thuật ngữ thường được dùng để chỉ đến hệ thống/ừng dụng đang được kiểm thử. Với hoạt động unit test, các đơn vị kiểm thử của chúng ta là những thành phần nhỏ nhất trong hệ thống nên có thể dùng các thuật ngữ khác phù hợp hơn như Code Under Test (CUT), hoặc OUT (Object Under Test).
+
+### Mock và Stub
+
+Đây là các thành phần bên ngoài được mô phỏng hoặc giả lập trong ngữ cảnh của hoạt động kiểm thử. Thông thường, để SUT hoạt động đúng chức năng thì sẽ cần đến những thành phần bên ngoài như Web Service, Database,... Ở cấp độ unit test, chúng ta cần phải tách rời các thành phần phụ thuộc này để có thể dễ dàng thực thi test case. Phần này sẽ được giải thích rõ hơn trong mục `Sử dụng Mockito (Mocking framework)`.
+
+Lưu ý: Ngoài thuật ngữ mock và stub, thỉnh thoảng bạn sẽ gặp các thuật ngữ khác như Spy và Fake. Mặc dù có phần khác nhau về khái niệm nhưng chúng ta sẽ tạm thời cần biết về Mock và Stub.
 
 ## Thiết kế test case
 
-Trong phần này, chúng ta sẽ tìm hiểu xem một test case như thế nào là tốt. Dựa vào các đặc tính đó, chúng ta sẽ tìm hiểu những nguyên tắc để có thể thiết kế và thực hiện được các test case tốt.
+Trong phần này, chúng ta sẽ tìm hiểu cấu trúc thường gặp ở một test case là gì, và xem xét một số yếu tố tạo nên một test case tốt. Dựa vào các đặc tính đó, chúng ta sẽ tìm hiểu những nguyên tắc để có thể thiết kế và thực hiện được các test case tốt.
 
 ### Cấu trúc một test case
 
-Các trúc mã mà chúng ta nên tuân thủ trong một test case là `cấu trúc AAA`.
+Các trúc mã mà chúng ta nên tuân thủ trong một test case là `cấu trúc AAA`. Cấu trúc này gồm 3 thành phần:
 
-Cấu trúc này có 3 thành phần:
-
-* Arrange - Chuẩn bị dữ liệu cho test case hiện tại.
-* Act - Thực hiện việc gọi phương thức/hàm để nhận được kết quả thực tế.
-* Assert - So sánh giá trị mong đợi và giá trị thực tế nhận được ở bước trên. Kết quả của bước này là:
-  * PASSED: nếu kết quả mong đợi và kết quả thực tế khớp nhau
-  * FAILED: nếu kết quả mong đợi khác với kết quả thực tế
+* Arrange - Chuẩn bị dữ liệu đầu vào và các điều kiện khác để thực thi test case.
+* Act - Thực hiện việc gọi phương thức/hàm với đầu vào đã được chuẩn bị ở `Arrange` và nhận về kết quả thực tế.
+* Assert - So sánh giá trị mong đợi và giá trị thực tế nhận được ở bước `Act`. Kết quả của test case sẽ là một trong hai trạng thái sau:
+  * PASS: nếu kết quả mong đợi và kết quả thực tế khớp nhau
+  * FAIL: nếu kết quả mong đợi khác với kết quả thực tế
 
 ### Thành phần cố định (Fixture)
 
@@ -43,14 +54,13 @@ Là những thành phần được lặp đi lặp lại qua mỗi test case và
 
 Một ca kiểm thử tốt sẽ có những đặc tính sau đây:
 
-* Dễ viết - Có thể bao quát được nhiều trường hợp kiểm thử mà không mất quá nhiều công sức
-* Dễ đọc - Có thể mô tả được chính xác hành vi hoặc chức năng được kiểm thử
-* Tự động hoá - Có thể thực thi lặp lại nhiều lần
-* Dễ thực thi
-* Thực thi nhanh
-* Đồng nhất  - Luôn trả về cùng kết quả sau mỗi lần chạy (nếu không thay đổi mã nguồn bên trong)
+* Dễ viết - Có thể bao quát được nhiều trường hợp kiểm thử mà không mất quá nhiều công sức.
+* Dễ đọc - Có thể mô tả được chính xác hành vi hoặc chức năng được kiểm thử.
+* Tự động hoá - Có thể thực thi lặp lại nhiều lần.
+* Dễ thực thi và thực thi nhanh.
+* Đồng nhất  - Luôn trả về cùng kết quả sau mỗi lần chạy (nếu không thay đổi mã nguồn bên trong).
 * Cô lập - Có thể thực thi độc lập mà không phụ thuộc vào các thành phần khác trong hệ thống. *Bạn có thể tham khảo mục "Sử dụng Mockito" để làm rõ hơn ý này.*
-* Khi kết quả kiểm thử thất bại (FAILED), có thể dễ dàng tìm ra giá trị mong đợi và nhanh chóng xác định được vấn đề
+* Khi kết quả kiểm thử thất bại (FAILED), có thể dễ dàng tìm ra giá trị mong đợi và nhanh chóng xác định được vấn đề.
 
 ### Nguyên tắc viết kiểm thử
 
@@ -60,13 +70,15 @@ Hiện nay, JUnit được tích hợp và hỗ trợ ở phần lớn các IDE 
 
 Trong mục này, chúng ta sẽ cùng lượt qua những tính năng được hỗ trợ trong JUnit 5 - phiên bản mới nhất hiện nay.
 
-### Các Annotation trong JUnit
+### Các annotation trong JUnit
 
 Sơ đồ dưới đây thể hiện thứ tự thực hiện các phương thức khi được đánh dấu với annotion tương ứng:
 
 ![quá trình thực hiện](_img/junit_annotations_2.png)
 
-Các annotaion `@BeforeAll`, `@BeforeEach`,`@AfterEach`, `@AfterAll` là những khối lệnh thực hiện chức năng là thành cố định.
+Các annotaion `@BeforeAll`, `@BeforeEach`,`@AfterEach`, `@AfterAll` là những **thành phần cố định**. Thực hiện các chức năng lặp đi lặp lại.
+
+Annotation `@Test` được dùng để xác định một test case.
 
 ### Assertions
 

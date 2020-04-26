@@ -89,11 +89,6 @@ Một ca kiểm thử tốt sẽ có những đặc tính sau đây:
 * Cô lập - Có thể thực thi độc lập mà không phụ thuộc vào các thành phần khác trong hệ thống. *Bạn có thể tham khảo mục "Sử dụng Mockito" để làm rõ hơn ý này.*
 * Khi kết quả kiểm thử thất bại (FAILED), có thể dễ dàng tìm ra giá trị mong đợi và nhanh chóng xác định được vấn đề.
 
-### Nguyên tắc viết kiểm thử
-
-1. Mỗi test case là một phương thức độc lập, có thể thực thi mà không phụ thuộc vào bất kỳ test case nào khác.
-2. Thứ tự thực hiện của mỗi test case không nên ảnh hưởng đến kết quả thực thi (mặc dù có thể).
-
 ### Quy ước đặt tên
 
 #### Tên lớp chứa mã kiểm thử
@@ -124,6 +119,14 @@ public void GivenNullUsernameWhenCreateStudentThenShouldThrowException() {}
 @Test
 public void whenEnterValidUsernameAndPassword_thenLoginSuccessfully() {}
 ```
+
+### Nguyên tắc viết kiểm thử
+
+1. Mỗi test case là một phương thức độc lập, có thể thực thi mà không phụ thuộc vào bất kỳ test case nào khác.
+2. Thứ tự thực hiện của mỗi test case không nên ảnh hưởng đến kết quả thực thi (mặc dù có thể).
+3. Khi phát hiện bug trong chương trình, hãy viết ngay kiểm thử cho trường hợp xảy ra bug đó để có thể kiểm tra lại sau này.
+4. Tên phương thức kiểm thử phải rõ  ràng. Vì vậy không phải do dự nếu tên quá dài. Ví dụ `TestDivisionWhenNumPositiveDenomNegative` tốt hơn `DivisionTest3`.
+5. Hãy kiểm tra cả những trường hợp phương thức ném ra ngoại lệ (nếu có). Ví dụ `WhenDivisionByZeroShouldThrowException`.
 
 ## Sử dụng JUnit
 
@@ -440,7 +443,7 @@ Nếu đây là lần đầu tiên bạn viết unit test, có lẽ sẽ gặp n
 
 Cảm ơn bạn đã đồng hành cùng bài viết đến đây. Hy vọng những bước chân đầu tiên này sẽ mang lại nhiều ý nghĩa cho chặng đường học hỏi tiếp theo của bạn. Hãy tìm tòi và thực hành nhiều hơn để có thể làm chủ được kỹ năng Unit Test nói riêng và automation testing nói chung. Tới đây, chúng ta nên làm gì để học và thực hành hiệu quả hơn ở kỹ năng này?
 
-Câu châm ngôn của mình là "Thế giới này thật là rộng lớn.. và có quá nhiều sách để đọc". Nên gợi ý đầu tiên luôn là đọc những đầu sách hay về Unit Test, Test-Driven Development và những chủ đề liên quan. Các bạn xem qua danh sách gợi ý bên dưới nhé!
+Câu châm ngôn của mình là "Thế giới này thật là rộng lớn.. và có quá nhiều sách để đọc". Nên gợi ý đầu tiên luôn là đọc những đầu sách hay về Unit Test, Test-Driven Development và những chủ đề liên quan. Các bạn xem qua các gợi ý sách và website bên dưới nhé!
 
 ### Sách nên tham khảo
 

@@ -474,3 +474,5 @@ Câu châm ngôn của mình là "Thế giới này thật là rộng lớn.. v�
 * The Art of Unit Testing - 
 
 ### Website nên tham khảo
+
+* xUnit Patterns (http://xunitpatterns.com/)

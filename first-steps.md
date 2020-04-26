@@ -186,8 +186,8 @@ class CalculatorTests {
 
 Giải thích ví dụ:
 
-* `@Test` là annotation đánh dấu phương thức `shouldReturn2When1Plus1()` là một test case.
-* Ở phần thân của phương thức chứa một dòng mã kiểm tra kết quả của phương thức `add()` với đầu vào là hai toán hạng có giá trị là `1` và `1`.
+* `@Test` là annotation đánh dấu phương thức `shouldReturn2When1Plus1()` là một test case. Hãy chú ý rằng tên của phương thức test được viết rất rõ là `nên trả về kết quả 2 khi 1 cộng 1`.
+* Ở phần thân của phương thức chứa một dòng mã kiểm tra kết quả của phương thức `add()` với đầu vào là hai số có giá trị lần lượt là `1` và `1`.
 * So sánh giá trị thực tế trả về của phương `add()` với giá trị mong đợi là `2`.
 * Sau khi chạy test case này, kết quả sẽ là `PASS` nếu phương thức `add(1, 1))` trả  về kết quả đúng bằng `2`.
 

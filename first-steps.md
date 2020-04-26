@@ -33,17 +33,17 @@ Sau khi thực hiện khối lệnh cần kiểm thử, chúng ta sẽ nhận đ
 
 ### Application (hoặc Code) Under Test
 
- Application Under Test (AUT)) là thuật ngữ thường được dùng để chỉ đến hệ thống/ừng dụng đang được kiểm thử. Với hoạt động unit test, các đơn vị kiểm thử của chúng ta là những thành phần nhỏ nhất trong hệ thống nên có thể dùng các thuật ngữ khác phù hợp hơn như Code Under Test (CUT), hoặc OUT (Object Under Test).
+ Application Under Test (AUT)) là thuật ngữ thường được dùng để chỉ đến hệ thống/ứng dụng đang được kiểm thử. Với hoạt động unit test, các đơn vị kiểm thử của chúng ta là những thành phần nhỏ nhất trong hệ thống nên có thể dùng các thuật ngữ khác phù hợp hơn như Code Under Test (CUT).
 
 ### Mock và Stub
 
 Đây là các thành phần bên ngoài được mô phỏng hoặc giả lập trong ngữ cảnh của hoạt động kiểm thử. Thông thường, để AUT hoạt động đúng chức năng thì sẽ cần đến những thành phần bên ngoài như Web Service, Database,... Ở cấp độ unit test, chúng ta cần phải tách rời các thành phần phụ thuộc này để có thể dễ dàng thực thi test case. Phần này sẽ được giải thích rõ hơn trong mục `Sử dụng Mockito (Mocking framework)`.
 
-Lưu ý: Ngoài thuật ngữ mock và stub, thỉnh thoảng bạn sẽ gặp các thuật ngữ khác như Spy và Fake. Mặc dù có phần khác nhau về khái niệm nhưng chúng ta sẽ tạm thời cần biết về Mock và Stub.
+Lưu ý: Ngoài thuật ngữ mock và stub, thỉnh thoảng bạn sẽ gặp các từ khác như Spy và Fake.
 
 ## Thiết kế test case
 
-Trong phần này, chúng ta sẽ tìm hiểu cấu trúc thường gặp ở một test case là gì, và xem xét một số yếu tố tạo nên một test case tốt. Dựa vào các đặc tính đó, chúng ta sẽ tìm hiểu những nguyên tắc để có thể thiết kế và thực hiện được các test case tốt.
+Trong phần này, chúng ta sẽ tìm hiểu cấu trúc thường gặp ở một test case và xem xét một số yếu tố tạo nên một test case tốt. Dựa vào các đặc tính đó, chúng ta sẽ tìm hiểu những nguyên tắc để có thể thiết kế và thực hiện được các test case tốt.
 
 ### Cấu trúc một test case
 
@@ -55,27 +55,27 @@ Các trúc mã mà chúng ta nên tuân thủ trong một test case là `cấu t
   * PASS: nếu kết quả mong đợi và kết quả thực tế khớp nhau
   * FAIL: nếu kết quả mong đợi khác với kết quả thực tế
 
-### Thành phần cố định (Fixture)
+### Thành phần cố định (Fixtures)
 
 Là những thành phần được lặp đi lặp lại qua mỗi test case và có thể chia sẻ các thao tác chung giữa các test case. Ví dụ: thiết lập cấu hình hoặc chuẩn bị dữ liệu trước khi bộ test được thực thi, và dọn dẹp bộ nhớ sau khi hoàn thành. Thành phần cố định phải được đặt lên trên cùng của bộ kiểm thử.
 
-Có hai loại thành phần cố định chính:
+Có bốn loại thành phần cố định chính:
 
 #### Setup
 
-Là thành phần được thực thi trước khi test case thực thi. Trong một số thư viện xUnit (công cụ hỗ trợ viết và thực thi unit test), chúng ta thường gặp những phương thức/hàm, hoặc annotion có tên là `beforeEach`. Thành phần này chính là **Setup**.
+Là thành phần được thực thi trước khi test case thực thi. Trong một số thư viện xUnit (công cụ hỗ trợ viết và thực thi unit test), chúng ta thường gặp những phương thức/hàm, hoặc annotion có tên là `BeforeEach`. Thành phần này chính là **Setup**.
 
 #### One-Time Setup
 
-Là thành phần được thực thi đầu tiên (trước cả khi cả `setup` và `test case` được thực thi). Trong một số thư viện xUnit (công cụ hỗ trợ viết và thực thi unit test), chúng ta thưsờng gặp những phương thức/hàm, hoặc annotion có tên là `beforeAll`. Thành phần này chính là **One-Time Setup**.
+Là thành phần được thực thi đầu tiên (trước cả khi cả `setup` và `test case` được thực thi). Trong một số thư viện xUnit (công cụ hỗ trợ viết và thực thi unit test), chúng ta thưsờng gặp những phương thức/hàm, hoặc annotion có tên là `BeforeAll`. Thành phần này chính là **One-Time Setup**.
 
 #### Teardown
 
-Là thành phần được thực thi sau khi `test case` được thực thi. Trong một số thư viện xUnit (công cụ hỗ trợ viết và thực thi unit test), chúng ta thường gặp những phương thức/hàm, hoặc annotion có tên là `afterEach`. Thành phần này chính là **Teardown**.
+Là thành phần được thực thi sau khi `test case` được thực thi. Trong một số thư viện xUnit (công cụ hỗ trợ viết và thực thi unit test), chúng ta thường gặp những phương thức/hàm, hoặc annotion có tên là `AfterEach`. Thành phần này chính là **Teardown**.
 
 #### One-Time Teardown
 
-Là thành phần được thực thi sau cùng (sau khi tất cả `test case` và `teardown` được thực thi). Trong một số thư viện xUnit (công cụ hỗ trợ viết và thực thi unit test), chúng ta thường gặp những phương thức/hàm, hoặc annotion có tên là `afterAll`. Thành phần này chính là **One-Time Teardown**.
+Là thành phần được thực thi sau cùng (sau khi tất cả `test case` và `teardown` được thực thi). Trong một số thư viện xUnit (công cụ hỗ trợ viết và thực thi unit test), chúng ta thường gặp những phương thức/hàm, hoặc annotion có tên là `AfterAll`. Thành phần này chính là **One-Time Teardown**.
 
 ### Đặc tính của một unit test tốt
 
@@ -92,7 +92,7 @@ Một ca kiểm thử tốt sẽ có những đặc tính sau đây:
 ### Nguyên tắc viết kiểm thử
 
 1. Mỗi test case là một phương thức độc lập, có thể thực thi mà không phụ thuộc vào bất kỳ test case nào khác.
-2. Thứ tự thực hiện của mỗi test case không được ảnh hưởng đến kết quả thực thi.
+2. Thứ tự thực hiện của mỗi test case không nên ảnh hưởng đến kết quả thực thi (mặc dù có thể).
 
 ### Quy ước đặt tên
 

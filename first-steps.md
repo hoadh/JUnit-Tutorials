@@ -478,7 +478,7 @@ Câu châm ngôn của mình là "Thế giới này thật là rộng lớn.. v�
 ### Sách nên tham khảo
 
 * Test Driven Development: By Example - Tác giả: Kent Beck
-* The Art of Unit Testing - 
+* The Art of Unit Testing - Roy Osherove (Các ví dụ trong sách được viết vớt .NET nhưng vẫn có thể tham khảo để phát triển ứng dụng trên Java)
 
 ### Website nên tham khảo
 

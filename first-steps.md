@@ -76,6 +76,8 @@ Các trúc mã mà chúng ta nên tuân thủ trong một test case là `cấu t
   * PASS: nếu kết quả mong đợi và kết quả thực tế khớp nhau
   * FAIL: nếu kết quả mong đợi khác với kết quả thực tế
 
+Đôi khi bạn sẽ bắt gặp một số bài viết dùng từ `cấu trúc Given-When-Then`. Về bản chất, cũng chính là `cấu trúc AAA` như trên.
+
 ### Thành phần cố định (Fixtures)
 
 Là những thành phần được lặp đi lặp lại qua mỗi test case và có thể chia sẻ các thao tác chung giữa các test case. Ví dụ: thiết lập cấu hình hoặc chuẩn bị dữ liệu trước khi bộ test được thực thi, và dọn dẹp bộ nhớ sau khi hoàn thành. Thành phần cố định phải được đặt lên trên cùng của bộ kiểm thử.

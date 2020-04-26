@@ -160,7 +160,7 @@ public void whenEnterValidUsernameAndPassword_thenLoginSuccessfully() {}
 
 ## Sử dụng JUnit
 
-Hiện nay, JUnit được tích hợp và hỗ trợ ở phần lớn các IDE hiện tại cho Java. Việc sử dụng JUnit trong các dự án Java không khó. Các bạn có thể tìm hiểu cách cài đặt thư viện cho dự án của mình qua những hướng dẫn trên mạng.
+Hiện nay, JUnit được tích hợp và hỗ trợ ở phần lớn các IDE hiện tại cho Java (như Eclipse, IntelliJ, NetBeans,...). Việc sử dụng JUnit trong các dự án Java không khó. Các bạn có thể tìm hiểu cách cài đặt thư viện cho dự án của mình qua những hướng dẫn trên mạng.
 
 Trong mục này, chúng ta sẽ cùng lượt qua những tính năng được hỗ trợ trong JUnit 5 - phiên bản mới nhất hiện nay.
 
@@ -169,9 +169,9 @@ Trong mục này, chúng ta sẽ cùng lượt qua những tính năng được 
 Dưới đây là ví dụ giúp bạn có cái nhìn tổng quan về một kiểm thử được viết với JUnit5:
 
 ```java
-import static org.junit.jupiter.api.Assertions.assertEquals;
 import com.codegym.Calculator;
 import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class CalculatorTests {
 

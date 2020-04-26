@@ -18,6 +18,12 @@ Với bài viết này, bạn học được những nội dung sau:
 * Kết hợp Mockito và JUnit để thực hiện việc kiểm thử trong một số tình huống thực tế
 * Case Study và những bài học khi thực hiện kiểm thử
 
+## Lợi ích của Unit Testing
+
+* Tách rời việc kiểm thử với mã nguồn; không cần viết mã vào phương thức `main()` để có thể kiểm tra phương thức có hoạt động đúng đắn hay không.
+* Duy trì một bộ kiểm thử liên tục được cập nhật.
+* Đảm bảo mã mới không ảnh hưởng và gây lỗi tới những chức năng hiện có (qua việc thực hiện chạy lại toàn bộ bộ test đã viết từ trước).
+
 ## Thuật ngữ
 
 Để đọc hiểu nội dung hướng dẫn này, bạn cần biết đến một số thuật ngữ thường được sử dụng trong các hoạt động kiểm thử.
@@ -428,16 +434,16 @@ public void tryMockitoMock() {
 
 ## Case Study
 
-Dự án chúng ta thực hiện là một ứng dụng tra cứu danh mục đầu tư dành cho các nhà đầu tư cổ phiếu chứng khoán.
-
-Ứng dụng cần có các tính năng sau:
+Dự án chúng ta thực hiện là một ứng dụng tra cứu danh mục đầu tư dành cho các nhà đầu tư cổ phiếu chứng khoán. Ứng dụng cần có các tính năng sau:
 
 1. Tra cứu giá các mã cổ phiếu đang đầu tư (dữ liệu được lấy về từ API miễn phí)
 2. Quản lý danh sách các mã cổ phiếu đang quan tâm (bao gồm tìm kiếm theo mã, lưu mã vào danh sách quan tâm, xoá một mã nào đó khỏi danh sách)
 
-Trước khi thực sự viết mã, hãy hình dung trong đầu và vẽ ra một bảng thiết kế bao gồm những interface, class và các phương thức có thể cần để thực hiện được ứng dụng này. Dựa vào bản thiết kế, hãy viết các unit test case cho ứng dụng.
+Trước khi thực sự viết mã, hãy thiết kế chi tiết bao gồm những interface, class và các phương thức có thể cần để thực hiện được ứng dụng này. Dựa vào bản thiết kế, hãy viết các unit test case cho ứng dụng.
 
 ### Hướng dẫn
+
+#### Thiết kế chi tiết
 
 #### Tạo một class mô phỏng với tên là StockDB
 

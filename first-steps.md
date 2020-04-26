@@ -43,7 +43,28 @@ Lưu ý: Ngoài thuật ngữ mock và stub, thỉnh thoảng bạn sẽ gặp c
 
 ## Thiết kế test case
 
-Trong phần này, chúng ta sẽ tìm hiểu cấu trúc thường gặp ở một test case và xem xét một số yếu tố tạo nên một test case tốt. Dựa vào các đặc tính đó, chúng ta sẽ tìm hiểu những nguyên tắc để có thể thiết kế và thực hiện được các test case tốt.
+Trong phần này, chúng ta sẽ tìm hiểu các loại test case, cấu trúc thường gặp ở một test case và xem xét một số yếu tố tạo nên một test case tốt. Dựa vào các đặc tính đó, chúng ta sẽ tìm hiểu những nguyên tắc để có thể thiết kế và thực hiện được các test case tốt.
+
+### Phân loại test case
+
+1. Positive test case: Là những trường hợp kiểm thử đảm bảo người dùng có thể thực hiện được thao tác với dữ liệu hợp lệ.
+2. Negative test case: Là những trường hợp kiểm thử tìm cách gây lỗi cho ứng dụng bằng cách sử dụng các dữ liệu không hợp lệ.
+
+Hãy làm rõ các loại test case trên qua một ví dụ đơn giản như sau. Giả sử, chúng ta đang thiết kế ứng dụng đặt phòng khách sạn và có một yêu cầu là:
+
+>  Hệ thống cho phép khách hàng có thể đặt phòng mới với thời gian xác định.
+
+Với yêu cầu trên, chúng ta có một số trường hợp cần kiểm thử như sau:
+
+* Trường hợp **positive** là đảm bảo có thể thêm phòng với các dữ liệu hợp lệ như mã phòng cần đặt, thời gian hợp lệ, mã khách hàng hợp lệ, giá tiền được tính với số ngày đặt,...
+* Còn các trường hợp **negative** sẽ cố gắng thực hiện thao tác đặt phòng với những dữ liệu không hợp lệ như:
+  * Đặt phòng mới mà không có mã phòng
+  * Đặt phòng mới với thời gian không hợp lệ (thời gian ở quá khứ)
+  * Đặt phòng mới với mã khách hàng không tồn tại trong cơ sở dữ liệu
+  * Đặt phòng mới với giá tiền âm (nhỏ hơn 0).
+  * ... và nhiều trường hợp khác
+
+Hy vọng qua ví dụ trên, bạn có thể phân loại được các test case và tự xác định được các test case cho yêu cầu phần mềm mà bạn đang thực hiện.
 
 ### Cấu trúc một test case
 
@@ -120,13 +141,13 @@ public void GivenNullUsernameWhenCreateStudentThenShouldThrowException() {}
 public void whenEnterValidUsernameAndPassword_thenLoginSuccessfully() {}
 ```
 
-### Nguyên tắc viết kiểm thử
+### Gợi ý viết kiểm thử tốt
 
-1. Mỗi test case là một phương thức độc lập, có thể thực thi mà không phụ thuộc vào bất kỳ test case nào khác.
+1. Mỗi test case nên là một phương thức độc lập, có thể thực thi mà không phụ thuộc vào bất kỳ test case nào khác.
 2. Thứ tự thực hiện của mỗi test case không nên ảnh hưởng đến kết quả thực thi (mặc dù có thể).
 3. Khi phát hiện bug trong chương trình, hãy viết ngay kiểm thử cho trường hợp xảy ra bug đó để có thể kiểm tra lại sau này.
-4. Tên phương thức kiểm thử phải rõ  ràng. Vì vậy không phải do dự nếu tên quá dài. Ví dụ `TestDivisionWhenNumPositiveDenomNegative` tốt hơn `DivisionTest3`.
-5. Hãy kiểm tra cả những trường hợp phương thức ném ra ngoại lệ (nếu có). Ví dụ `WhenDivisionByZeroShouldThrowException`.
+4. Tên phương thức kiểm thử phải rõ  ràng. Vì vậy không phải do dự nếu tên phương thức quá dài. Ví dụ `TestDivisionWhenNumPositiveDenomNegative` tốt hơn `DivisionTest3`.
+5. Hãy kiểm tra cả những trường hợp ném ra ngoại lệ (nếu có). Ví dụ `WhenDivisionByZeroShouldThrowException`.
 
 ## Sử dụng JUnit
 

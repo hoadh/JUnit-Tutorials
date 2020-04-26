@@ -149,7 +149,8 @@ public void whenEnterValidUsernameAndPassword_thenLoginSuccessfully() {}
 2. Thứ tự thực hiện của mỗi test case không nên ảnh hưởng đến kết quả thực thi (mặc dù có thể).
 3. Khi phát hiện bug trong chương trình, hãy viết ngay kiểm thử cho trường hợp xảy ra bug đó để có thể kiểm tra lại sau này.
 4. Tên phương thức kiểm thử phải rõ  ràng. Vì vậy không phải do dự nếu tên phương thức quá dài. Ví dụ `TestDivisionWhenNumPositiveDenomNegative` tốt hơn `DivisionTest3`.
-5. Hãy kiểm tra cả những trường hợp ném ra ngoại lệ (nếu có). Ví dụ `WhenDivisionByZeroShouldThrowException`.
+5. Hãy kiểm thử những trường hợp ném ra ngoại lệ (nếu có). Ví dụ `WhenDivisionByZeroShouldThrowException`.
+6. Hãy kiểm thử các trường hợp *negative* để làm rõ hình thức phản hồi khi đầu vào là dữ liệu không hợp lệ.
 
 ## Sử dụng JUnit
 

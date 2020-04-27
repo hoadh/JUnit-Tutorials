@@ -434,40 +434,9 @@ public void tryMockitoMock() {
 
 ## Case Study
 
-Dự án chúng ta thực hiện là một ứng dụng tra cứu danh mục đầu tư dành cho các nhà đầu tư cổ phiếu chứng khoán. Ứng dụng cần có các tính năng sau:
-
-1. Tra cứu giá các mã cổ phiếu đang đầu tư (dữ liệu được lấy về từ API miễn phí)
-2. Quản lý danh sách các mã cổ phiếu đang quan tâm (bao gồm tìm kiếm theo mã, lưu mã vào danh sách quan tâm, xoá một mã nào đó khỏi danh sách)
+Dự án mà chúng ta sẽ thực hiện là một trang cửa hàng trực tuyến đơn giản hỗ trợ duyệt danh sách sản phẩm và thông tin chi tiết của từng mặt hàng. Khách hàng có thể chọn sản phẩm và lưu vào giỏ hàng để thanh toán.
 
 Trước khi thực sự viết mã, hãy thiết kế chi tiết bao gồm những interface, class và các phương thức có thể cần để thực hiện được ứng dụng này. Dựa vào bản thiết kế, hãy viết các unit test case cho ứng dụng.
-
-### Hướng dẫn
-
-#### Thiết kế chi tiết
-
-#### Tạo một class mô phỏng với tên là StockDB
-
-Để mô phỏng hành vi sau:
-
-1. Lưu mã cổ phiếu (kiểu chuỗi) và trả về `true`
-2. Lấy thông tin mã cổ phiếu và trả về giá trị kiểu chuỗi
-
-Các bước thức hiện:
-
-1. Tạo interface StockDB
-2. Viết test case và code
-
-#### Tạo class mô phỏng StockAPI
-
-Các tình huống khi test
-
-1. Phương thức cần test là `void` (không trả về dữ liệu)
-2. Phương thức cần test gọi đến một phương thức khác cùng lớp
-   Chức năng: Lưu danh sách mã cổ phiếu quan tâm/đang đầu tư (gửi request lên DB)
-
-Hai tình huống trên có thể sử dụng `spy()` kết hợp `doReturn()`.
-
-Nếu đây là lần đầu tiên bạn viết unit test, có lẽ sẽ gặp nhiều khó khăn. Nhưng đừng nản chí nhé! Hành trình phía trước sẽ còn ẩn chứa nhiều điều thú vị.
 
 ## Chặng đường tiếp theo
 

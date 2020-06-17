@@ -91,7 +91,7 @@ Như ví dụ trên, hàm `expect` mong đợi giá trị của biến `my_varia
 * Setup là thành phần được thực thi trước tất cả (hoặc mỗi) test case.
 * Teardown là thành phần được thực thi sau tất cả (hoặc mỗi) test case.
 
-Trong Jasmine, để thiết lập **Setup** và Teardown, chúng ta có các hàm sau:
+Trong Jasmine, để thiết lập **Setup** và **Teardown**, chúng ta sử dụng các hàm sau:
 
 * beforeEach
 * beforeAll
@@ -136,13 +136,13 @@ it('should wait until getting result', (done) => {
 });
 ```
 
-## Tìm hiểu TestBed
+## Testing trong Angular
 
-`TestBed` là một tiện ích được Angular cung cấp để tạo một môi trường kiểm thử phù hợp cho các thành phần của Angular như: Component, Service, Pipe, Directive,...
+### Tiện ích TestBed
 
-Với TestBed, lập trình viên có thể khởi tạo một module kiểm thử với phương thức `configureTestingModule`. Lý do là mọi component trong Angular cần được chạy trong một module cụ thể nào đó.
+`TestBed` là một tiện ích được Angular cung cấp để tạo môi trường kiểm thử phù hợp cho các thành phần của Angular như: Component, Service, Pipe, Directive,...
 
-Tham số cung cấp cho `configureTestingModule` khi khởi tạo module là những metadata cần thiết cho một module như imports, providers, declarations,...
+Với TestBed, lập trình viên có thể khởi tạo một module kiểm thử với phương thức `configureTestingModule`. Tham số cung cấp cho `configureTestingModule` khi khởi tạo module là những metadata cần thiết cho một module như imports, providers, declarations,...
 
 Chúng ta thường tạo mới một module kiểm thử trước khi thực hiện các test case liên quan tới component trong hàm beforeEach (như đã giới thiệu ở trên). Ví dụ: 
 
@@ -170,10 +170,37 @@ beforeEach(async(() => {
 }));
 ```
 
-## Các tình huống viết unit test trong Angular
+### Component Fixtures
 
-### Viết unit test cho component
-### Viết unit test cho service
-### Viết unit test cho component có phụ thuộc service
+Fixture là đối tượng đại diện component root trong Angular. Với fixture, chúng ta có thể sử dụng `debugElement` để truy cập các thuộc tính bên trong component. 
+
+Component fixture được tạo bằng phương thức `createComponent` của TestBed.
+
+Hãy xem qua ví dụ dưới đây. Để lấy được giá trị text nằm trong thẻ <h1> đầu tiên trên template, chúng ta viết đoạn mã như sau:
+
+```typescript
+fixture = TestBed.createComponent(MyComponent); (1)
+debugElement = fixture.debugElement;						(2)
+let el = debugElement.query(By.css('h1'));			(3)
+let value = el.nativeElement.innerHTML;					(4)
+```
+
+Giải thích các dòng mã trên:
+1. Tạo một component fixture
+2. Truy cập đối tượng debugElement từ fixture
+3. Truy cập thẻ <h1> trên template bằng phương thức `query`. Chúng ta có thể kết hợp `By.css` để truy cập các phần tử với phương pháp tương tự selector của css.
+4. Biến `value` chứa giá trị text trong thẻ <h1> trên template.
+
+## Tình huống viết test trong Angular
+
+### Unit test cho component
+
+* Sử dụng DebugElement, kết hợp By.css
+* Kích hoạt một sự kiện trên template
+* Trong test case, việc phát hiện thay đổi sẽ không được thực hiện tự động. Vì vậy chúng ta cần gọi hàm `detectChanges` từ fixture để yêu cầu Angular chờ đến khi template được cập nhật.
+* Thu nhận giá trị thay đổi từ template (bằng cách sử dụng `nativeElement` và các thuộc tính quen thuộc trong HTML)
+
+### Unit test cho service
+### Unit test cho component có service phụ thuộc
 
 

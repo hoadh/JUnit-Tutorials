@@ -186,10 +186,11 @@ let value = el.nativeElement.innerHTML;					(4)
 ```
 
 Giải thích các dòng mã trên:
+
 1. Tạo một component fixture
 2. Truy cập đối tượng debugElement từ fixture
-3. Truy cập thẻ <h1> trên template bằng phương thức `query`. Chúng ta có thể kết hợp `By.css` để truy cập các phần tử với phương pháp tương tự selector của css.
-4. Biến `value` chứa giá trị text trong thẻ <h1> trên template.
+3. Truy cập thẻ `<h1>` trên template bằng phương thức `query`. Chúng ta có thể kết hợp `By.css` để truy cập các phần tử với phương pháp tương tự selector của css.
+4. Biến `value` chứa giá trị text trong thẻ `<h1>` trên template.
 
 ## Tình huống viết test trong Angular
 

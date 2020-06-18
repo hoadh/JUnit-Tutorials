@@ -201,7 +201,7 @@ Bước 1: Tạo mới một component có tên là CodeGym từ Angular/CLI v�
 ng g c codegym
 ```
 
-Bước 2: Cấu trúc thư mục của component CodeGym được tạo ra như sau:
+Cấu trúc thư mục của component CodeGym được tạo như sau:
 
 ```scala
 src/
@@ -215,9 +215,7 @@ src/
 
 File `codegym.component.spec.ts` là nơi chứa mã unit test của component CodeGym. Chúng ta sẽ bổ sung mã test case vào đây sau khi bổ sung mã cho template và component.
 
-Bước 3:
-
-Sửa nội dung file component`codegym.component.ts`:
+Bước 2: Sửa nội dung file component`codegym.component.ts`
 
 ```typescript
 import { Component } from '@angular/core';
@@ -246,7 +244,7 @@ Sửa nội dung file template `codegym.component.html`:
 
 Ở component này, khi người dùng click vào button `Change Text` thì giá trị của myOrg thay đổi, và chuỗi trong thẻ <p> trên template sẽ được cập nhật lại.
 
-Bước 4: Bổ sung test case.
+Bước 3: Bổ sung test case
 
 Chúng ta muốn kiểm tra chuỗi được cập nhật sau khi click button có như mong muốn. Test case được bổ sung vào file `codegym.component.spec.ts` như sau:
 
@@ -275,16 +273,64 @@ Giải thích mã test case trên:
    1. Truy cập nội dung cập nhật trên template nhờ sử dụng thuộc tính `.nativeElement.innerText`, giá giá trị vào biến actual.
    2. So sánh với giá trị mong đợi (biến expected) thông qua hàm `expect`.
 
-### Giả lập service phụ thuộc khi test component
-
 ### Unit test cho service
 
-* Sử dụng `TestBed.get` để sử dụng đối tượng được tạo ra từ testing module.
-* Chuẩn bị dữ liệu
-* Thực thi phương thức trong service
-* Kiểm tra dữ liệu
+Giả sử, ứng dụng của chúng ta cần service phục vụ xử lý văn bản.
 
-### Giả lập service phụ thuộc khi test service
+Bước 1: Tạo mới service
+
+```bash
+ng g s text-transform
+```
+
+Cấu trúc thư mục của service text-transform được tạo như sau:
+
+```scala
+src/
+-- app/
+-- -- text-transform.service.spec.ts
+-- -- text-transform.service.ts
+```
+
+File `text-transform.service.spec.ts` là nơi chứa mã unit test của service TextTransform.
+
+Bước 2: Bổ sung mã vào `text-transform.service.ts`
+
+```typescript
+removeSpaces(text: string) {
+	return text.replace(/\s/g, '');
+}
+```
+
+Phương thức `removeSpaces` này có nhiệm vụ xoá tất cả khoảng trắng trong chuỗi đầu vào.
+
+Bước 3: Bổ sung mã test case vào `text-transform.service.spec.ts`
+
+```typescript
+it('should remove all space characters', () => {
+  // Arrange
+  const service: TextTransformService = TestBed.get(TextTransformService);								(1)
+  
+  const text = 'Code Gym Moncity';
+  const expected = 'CodeGymMoncity';
+
+  // Act
+  const actual = service.removeSpaces(text);			(2)
+
+  // Assert
+  expect(actual).toEqual(expected);								(3)
+});
+```
+
+Ở đoạn mã trên, chúng ta sử dụng  `TestBed.get` để lấy đối tượng service được tạo ra từ testing module. (1)
+
+Sau khi thực thi phương thức `removeSpaces`  (2), chúng ta kiểm tra kết quả trả về với giá trị mong đợi qua dòng lệnh `expect(actual).toEqual(expected);` (3)
+
+### Unit test cho component có service phụ thuộc
+
+### Mô phỏng service phụ thuộc khi test component
+
+### Mô phỏng service phụ thuộc khi test service
 
 ### Unit test cho service sử dụng HttpClient
 

@@ -176,7 +176,7 @@ Fixture là đối tượng đại diện component root trong Angular. Với fi
 
 Component fixture được tạo bằng phương thức `createComponent` của TestBed.
 
-Hãy xem qua ví dụ dưới đây. Để lấy được giá trị text nằm trong thẻ <h1> đầu tiên trên template, chúng ta viết đoạn mã như sau:
+Hãy xem qua ví dụ dưới đây. Để lấy được giá trị text nằm trong thẻ `<h1>` đầu tiên trên template, chúng ta viết đoạn mã như sau:
 
 ```typescript
 fixture = TestBed.createComponent(MyComponent); (1)
@@ -186,10 +186,11 @@ let value = el.nativeElement.innerHTML;					(4)
 ```
 
 Giải thích các dòng mã trên:
+
 1. Tạo một component fixture
 2. Truy cập đối tượng debugElement từ fixture
-3. Truy cập thẻ <h1> trên template bằng phương thức `query`. Chúng ta có thể kết hợp `By.css` để truy cập các phần tử với phương pháp tương tự selector của css.
-4. Biến `value` chứa giá trị text trong thẻ <h1> trên template.
+3. Truy cập thẻ `<h1>` trên template bằng phương thức `query`. Chúng ta có thể kết hợp `By.css` để truy cập các phần tử với phương pháp tương tự selector của css.
+4. Biến `value` chứa giá trị text trong thẻ `<h1>` trên template.
 
 ## Tình huống viết test trong Angular
 

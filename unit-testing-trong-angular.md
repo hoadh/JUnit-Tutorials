@@ -195,12 +195,97 @@ Giải thích các dòng mã trên:
 
 ### Unit test cho component
 
-* Sử dụng DebugElement, kết hợp By.css
-* Kích hoạt một sự kiện trên template
-* Trong test case, việc phát hiện thay đổi sẽ không được thực hiện tự động. Vì vậy chúng ta cần gọi hàm `detectChanges` từ fixture để yêu cầu Angular chờ đến khi template được cập nhật.
-* Thu nhận giá trị thay đổi từ template (bằng cách sử dụng `nativeElement` và các thuộc tính quen thuộc trong HTML)
+Bước 1: Tạo mới một component có tên là CodeGym từ Angular/CLI với lệnh sau:
+
+```bash
+ng g c codegym
+```
+
+Bước 2: Cấu trúc thư mục của component CodeGym được tạo ra như sau:
+
+```scala
+src/
+-- app/
+-- -- codegym/
+-- -- -- codegym.component.css
+-- -- -- codegym.component.html
+-- -- -- codegym.component.spec.ts
+-- -- -- codegym.component.ts
+```
+
+File `codegym.component.spec.ts` là nơi chứa mã unit test của component CodeGym. Chúng ta sẽ bổ sung mã test case vào đây sau khi bổ sung mã cho template và component.
+
+Bước 3:
+
+Sửa nội dung file component`codegym.component.ts`:
+
+```typescript
+import { Component } from '@angular/core';
+
+@Component({
+  selector: 'app-codegym',
+  templateUrl: './codegym.component.html',
+  styleUrls: ['./codegym.component.css']
+})
+export class CodegymComponent {
+  myOrg = 'CodeGym';
+
+  changeMyText() {
+    this.myOrg = 'CodeGym MonCity';
+  }
+}
+```
+
+Sửa nội dung file template `codegym.component.html`:
+
+```html
+<p>{{myOrg}}</p>
+
+<button (click)="changeMyText()">Change Text</button>
+```
+
+Ở component này, khi người dùng click vào button `Change Text` thì giá trị của myOrg thay đổi, và chuỗi trong thẻ <p> trên template sẽ được cập nhật lại.
+
+Bước 4: Bổ sung test case.
+
+Chúng ta muốn kiểm tra chuỗi được cập nhật sau khi click button có như mong muốn. Test case được bổ sung vào file `codegym.component.spec.ts` như sau:
+
+```typescript
+it('should change text after clicking on `Change Text` button', () => {
+  // Arrange (1)
+  const buttonElement = debugElement.query(By.css('button'));
+  const pElement = debugElement.query(By.css('p'));
+  const expected = 'CodeGym MonCity';
+
+  // Act (2)
+  buttonElement.triggerEventHandler('click', null);
+  fixture.detectChanges();
+
+  // Assert (3)
+  const actual = pElement.nativeElement.innerText;
+  expect(actual).toEqual(expected);
+});
+```
+
+Giải thích mã test case trên:
+
+1. **Arrange (1)** là khu vực chứa mã chuẩn bị cho dự án. Bao gồm: ánh xạ đến hai thẻ <p> và <button> trên template thông qua hàm `query` thuộc `DebugElement`, kết hợp `By.css`.
+2. **Act (2)** là nơi chứa mã thực hiện thao tác click vào button. Với phương thức `triggerEventHandler`, chúng ta có thể kích hoạt một sự kiện trên template. Trong test case, Angular không tự động phát hiện các thay đổi. Vì vậy cần gọi hàm `detectChanges` từ fixture để yêu cầu Angular chờ đến khi template được cập nhật.
+3. **Assert(3)** làm hai nhiệm vụ sau:
+   1. Truy cập nội dung cập nhật trên template nhờ sử dụng thuộc tính `.nativeElement.innerText`, giá giá trị vào biến actual.
+   2. So sánh với giá trị mong đợi (biến expected) thông qua hàm `expect`.
+
+### Giả lập service phụ thuộc khi test component
 
 ### Unit test cho service
-### Unit test cho component có service phụ thuộc
 
+* Sử dụng `TestBed.get` để sử dụng đối tượng được tạo ra từ testing module.
+* Chuẩn bị dữ liệu
+* Thực thi phương thức trong service
+* Kiểm tra dữ liệu
 
+### Giả lập service phụ thuộc khi test service
+
+### Unit test cho service sử dụng HttpClient
+
+* Trong tình huống cần test các service có sử dụng giao thức Http để giao tiếp với API Backend, chúng ta sử dụng HttpTestingClientModule

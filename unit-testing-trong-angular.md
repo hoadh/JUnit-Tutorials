@@ -569,3 +569,16 @@ Giải thích mã test case trên:
 2. Component chỉ phụ thuộc vào hàm `fetchUser` của service thật, nên chúng ta khai báo hàm `fetchUser` trả về giá trị là một đối tượng cố định.
    Hàm `of` (thuộc gói 'rxjs') sẽ trả về một  `Observable`  (giống kết quả được trả về từ `HttpClient`).
 3. **providers** (3) là khu vực khai báo các service phụ thuộc. Chúng ta sử dụng `useValue` để tiêm vào đối tượng mô phỏng được khởi tạo ở dòng (1).
+
+## Chặng đường tiếp theo
+
+Cảm ơn bạn đã đồng hành cùng bài viết đến đây. Hy vọng những tình huống viết test ở trên sẽ phù hợp với quá trình triển khai dự án Angular trên thực tế của bạn.
+
+Tiếp theo, để tăng thêm hiểu biết về testing trong Angular/JavaScript, tác giả bài viết gợi ý một số tài nguyên dưới đây:
+
+* Mục Testing trên trang tài liệu chính thức của Angular - https://angular.io/guide/testing
+* Trang chủ Jasmine - https://jasmine.github.io/
+* Các bài hướng dẫn Unit Testing cho Angular trên CodeCraft.tv - https://codecraft.tv/courses/angular/unit-testing/overview/
+* Khoá học có trả phí trên PluralSight hoặc LinkedIn Learning:
+  * https://www.pluralsight.com/courses/unit-testing-angular
+  * https://www.linkedin.com/learning/angular-testing-and-debugging

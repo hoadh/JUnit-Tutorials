@@ -354,7 +354,7 @@ beforeEach(async(() => {
 
 ### Unit test cho service sử dụng HttpClient
 
-Trong tình huống cần test các service có sử dụng giao thức HTTP để giao tiếp với API Backend, chúng ta sử dụng `HttpTestingClientModule` và giả lập HTTP bằng `HttpTestingController`.
+Với tình huống cần test các service có sử dụng giao thức HTTP để giao tiếp với API Backend, Angular cung cấp `HttpTestingClientModule` và công cụ giả lập HTTP bằng `HttpTestingController`.
 
 Ví dụ, chúng ta xây dựng tính năng hiển thị các thông tin Github của account `codegym-vn`. Như vậy sẽ cần service gọi API của Github để lấy các thông tin này.
 
@@ -409,7 +409,7 @@ export class GithubApiService {
   constructor(private httpClient: HttpClient) { }
 
   fetchUser() {
-    this.httpClient.get(this.apiUrl);
+    return this.httpClient.get(this.apiUrl);
   }
 }
 
@@ -459,6 +459,113 @@ Sau khi thực thi phương thức `fetchUser()`  (2), chúng ta kiểm tra kế
 
 Cuối cùng, `httpMock.verify()` (5) giúp xác minh rằng không còn request nào được tạo ra sau khi thực thi các đoạn mã mà chưa kiểm chứng.
 
-### Mô phỏng service phụ thuộc khi test component
+### Mô phỏng service khi test component
 
-Khi component phụ thuộc vào một service, và chính service ấy lại tiếp tục phụ thuộc vào một thành phần bên ngoài như API hoặc dịch vụ bên thứ ba,... chúng ta có thể giả lập các service này bằng cách tạo đối tượng mô phỏng.
+Khi component phụ thuộc vào một service, và service này lại phụ thuộc vào một thành phần bên ngoài như API hoặc dịch vụ bên thứ ba,... chúng ta có thể giả lập các service này bằng cách tạo đối tượng mô phỏng.
+
+Tiếp tục từ ví dụ ở mục `Unit test cho service sử dụng HttpClient` trên, chúng ta tạo component hiển thị các thông tin lấy từ GitHub API qua `GithubApiService` .
+
+Bước 1: Tạo mới một component có tên là Repo từ Angular/CLI với lệnh sau:
+
+```bash
+ng g c repo
+```
+
+Cấu trúc thư mục của component Repo được tạo như sau:
+
+```scala
+src/
+-- app/
+-- -- repo/
+-- -- -- repo.component.css
+-- -- -- repo.component.html
+-- -- -- repo.component.spec.ts
+-- -- -- repo.component.ts
+```
+
+File `repo.component.spec.ts` là nơi chứa mã unit test của component Repo. Chúng ta sẽ bổ sung mã test case vào đây sau khi bổ sung mã cho template và component.
+
+Bước 2: Sửa nội dung component `repo.component.ts`
+
+```typescript
+...
+
+export class RepoComponent {
+  user: any;
+
+  constructor(private githubApiService: GithubApiService) { }
+
+  fetchGithubUser() {
+    this.githubApiService.fetchUser().subscribe( res => {
+      this.user = res;
+    });
+  }
+}
+```
+
+Sửa nội dung file template `repo.component.html`:
+
+```html
+<p *ngIf="user">{{ user.login }}</p>
+
+<button (click)="fetchGithubUser()">Fetch Github User</button>
+```
+
+Ở component này, khi người dùng click vào button `Fetch Github User` thì giá trị user thay đổi, và chuỗi trong thẻ <p> trên template sẽ được cập nhật lại.
+
+Bước 3: Bổ sung test case
+
+Để kiểm tra template được cập nhật như mong đợi sau khi click button, file `repo.component.spec.ts` sẽ được bổ sung như sau:
+
+```typescript
+...
+
+fdescribe('RepoComponent', () => {
+  let component: RepoComponent;
+  let fixture: ComponentFixture<RepoComponent>;
+
+  // (1)
+  const mockGithubApiService = {
+    fetchUser: () => of({ login: 'codegym-vn' }) // (2)
+  };
+
+  beforeEach(async(() => {
+    TestBed.configureTestingModule({
+      declarations: [ RepoComponent ],
+      
+      // (3)
+      providers: [{
+        provide: GithubApiService,
+        useValue: mockGithubApiService
+      }],
+      imports: [HttpClientTestingModule]
+    })
+    .compileComponents();
+  }));
+	
+  ...
+  
+  it('should display GitHub repository name after click button', () => {
+    // Arrange
+    const debugElement = fixture.debugElement;
+    const expected = 'codegym-vn';
+
+    // Act
+    const buttonElement = debugElement.query(By.css('button'));
+    buttonElement.triggerEventHandler('click', null);
+    fixture.detectChanges();
+
+    // Assert
+    const pElement = debugElement.query(By.css('p'));
+    const actual = pElement.nativeElement.innerText;
+    expect(actual).toEqual(expected);
+  });
+});
+```
+
+Giải thích mã test case trên:
+
+1. Khởi tạo một đối tượng mô phỏng cho  `GithubApiService` có tên là `mockGithubApiService`.
+2. Component chỉ phụ thuộc vào hàm `fetchUser` của service thật, nên chúng ta khai báo hàm `fetchUser` trả về giá trị là một đối tượng cố định.
+   Hàm `of` (thuộc gói 'rxjs') sẽ trả về một  `Observable`  (giống kết quả được trả về từ `HttpClient`).
+3. **providers** (3) là khu vực khai báo các service phụ thuộc. Chúng ta sử dụng `useValue` để tiêm vào đối tượng mô phỏng được khởi tạo ở dòng (1).

@@ -352,10 +352,113 @@ beforeEach(async(() => {
 }));
 ```
 
+### Unit test cho service sử dụng HttpClient
+
+Trong tình huống cần test các service có sử dụng giao thức HTTP để giao tiếp với API Backend, chúng ta sử dụng `HttpTestingClientModule` và giả lập HTTP bằng `HttpTestingController`.
+
+Ví dụ, chúng ta xây dựng tính năng hiển thị các thông tin Github của account `codegym-vn`. Như vậy sẽ cần service gọi API của Github để lấy các thông tin này.
+
+Bước 1: Tạo mới service
+
+```bash
+ng g s github-api
+```
+
+Cấu trúc thư mục của service text-transform được tạo như sau:
+
+```scala
+src/
+-- app/
+-- -- github-api.service.spec.ts
+-- -- github-api.service.ts
+```
+
+File ` github-api.service.spec.ts` là nơi chứa mã unit test của service GithubApi.
+
+Bước 2: Bổ sung mã vào  `app.module.ts` và `github-api.service.ts`
+
+Vì chúng ta cần tạo các request HTTP, nên ứng dụng Angular được import module `HttpClientModule`:
+
+```typescript
+...
+import {HttpClientModule} from '@angular/common/http';
+
+@NgModule({
+  ...
+  imports: [
+    ...
+    HttpClientModule
+  ],
+  ...
+})
+export class AppModule { }
+```
+
+Tiếp tục bổ sung mã vào file `github-api.service.ts`:
+
+```typescript
+import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+
+@Injectable({
+  providedIn: 'root'
+})
+export class GithubApiService {
+  apiUrl = 'https://api.github.com/users/codegym-vn';
+
+  constructor(private httpClient: HttpClient) { }
+
+  fetchUser() {
+    this.httpClient.get(this.apiUrl);
+  }
+}
+
+
+```
+
+Phương thức `fetchUser`  có nhiệm vụ lấy thông tin của `codegym-vn` từ API của Github qua đường link `https://api.github.com/users/codegym-vn`.
+
+Bước 3: Bổ sung mã test case vào `github-api.service.spec.ts`
+
+```typescript
+import { TestBed } from '@angular/core/testing';
+
+import { GithubApiService } from './github-api.service';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
+
+fdescribe('GithubApiService', () => {
+  let httpMock: HttpTestingController; // (1)
+
+  beforeEach(() => {
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule]
+    });
+    httpMock = TestBed.get(HttpTestingController);
+  });
+
+  it('should fetch user from Github API', () => {
+    const service: GithubApiService = TestBed.get(GithubApiService);
+    
+    // (2)
+    service.fetchUser().subscribe( res => {
+      expect(res['login']).toEqual('codegym-vn'); // (3)
+    });
+
+    const req = httpMock.expectOne(service.apiUrl); // (4)
+    expect(req.request.method).toBe('GET');
+    httpMock.verify(); // (5)
+  });
+});
+```
+
+Ở đoạn mã trên, chúng ta sử dụng  `HttpTestingController` để xác minh các HTTP request. (1)
+
+Sau khi thực thi phương thức `fetchUser()`  (2), chúng ta kiểm tra kết quả API trả về với giá trị mong đợi qua mã lệnh `expect(res['login']).toEqual('codegym-vn');` (3)
+
+Đồng thời, chúng ta có thể kiểm chứng service đã tạo một HTTP request với method 'GET' tới đường link được lưu trong thuộc tính `apiUrl` . (4)
+
+Cuối cùng, `httpMock.verify()` (5) giúp xác minh rằng không còn request nào được tạo ra sau khi thực thi các đoạn mã mà chưa kiểm chứng.
+
 ### Mô phỏng service phụ thuộc khi test component
 
 Khi component phụ thuộc vào một service, và chính service ấy lại tiếp tục phụ thuộc vào một thành phần bên ngoài như API hoặc dịch vụ bên thứ ba,... chúng ta có thể giả lập các service này bằng cách tạo đối tượng mô phỏng.
-
-### Unit test cho service sử dụng HttpClient
-
-Với tình huống cần test các service có sử dụng giao thức HTTP để giao tiếp với API Backend, chúng ta sử dụng `HttpTestingClientModule` và giả lập HTTP bằng `HttpTestingController`.

@@ -179,10 +179,10 @@ Component fixture được tạo bằng phương thức `createComponent` của 
 Hãy xem qua ví dụ dưới đây. Để lấy được giá trị text nằm trong thẻ `<h1>` đầu tiên trên template, chúng ta viết đoạn mã như sau:
 
 ```typescript
-fixture = TestBed.createComponent(MyComponent); (1)
-debugElement = fixture.debugElement;						(2)
-let el = debugElement.query(By.css('h1'));			(3)
-let value = el.nativeElement.innerHTML;					(4)
+fixture = TestBed.createComponent(MyComponent); // (1)
+debugElement = fixture.debugElement; // (2)
+let el = debugElement.query(By.css('h1')); // (3)
+let value = el.nativeElement.innerHTML; // (4)
 ```
 
 Giải thích các dòng mã trên:
@@ -310,16 +310,16 @@ Bước 3: Bổ sung mã test case vào `text-transform.service.spec.ts`
 ```typescript
 it('should remove all space characters', () => {
   // Arrange
-  const service: TextTransformService = TestBed.get(TextTransformService);								(1)
+  const service: TextTransformService = TestBed.get(TextTransformService); // (1)
   
   const text = 'Code Gym Moncity';
   const expected = 'CodeGymMoncity';
 
   // Act
-  const actual = service.removeSpaces(text);			(2)
+  const actual = service.removeSpaces(text); // (2)
 
   // Assert
-  expect(actual).toEqual(expected);								(3)
+  expect(actual).toEqual(expected); // (3)
 });
 ```
 
@@ -329,10 +329,33 @@ Sau khi thực thi phương thức `removeSpaces`  (2), chúng ta kiểm tra k�
 
 ### Unit test cho component có service phụ thuộc
 
+Với hai ví dụ unit test cho component và service ở trên, chúng ta đã có component và service. Nếu component muốn sử dụng service TextTransform để để chuyển xoá khoảng trắng trước khi hiển thị thì chúng ta phải tiêm (inject) service vào component qua constructor như sau:
+
+```typescript
+...
+export class CodegymComponent {
+  ..
+  constructor(private textTransform: TextTransformService) {}
+  ...
+}
+```
+
+Ở phía test case, chúng ta bổ sung metadata `providers` cho phương thức `createTestingModule`. Đây là nơi khai báo các phụ thuộc cho module testing.
+
+```typescript
+beforeEach(async(() => {
+  TestBed.configureTestingModule({
+    declarations: [ CodegymComponent ],
+    providers: [TextTransformService]
+  })
+  .compileComponents();
+}));
+```
+
 ### Mô phỏng service phụ thuộc khi test component
 
-### Mô phỏng service phụ thuộc khi test service
+Khi component phụ thuộc vào một service, và chính service ấy lại tiếp tục phụ thuộc vào một thành phần bên ngoài như API hoặc dịch vụ bên thứ ba,... chúng ta có thể giả lập các service này bằng cách tạo đối tượng mô phỏng.
 
 ### Unit test cho service sử dụng HttpClient
 
-* Trong tình huống cần test các service có sử dụng giao thức Http để giao tiếp với API Backend, chúng ta sử dụng HttpTestingClientModule
+Với tình huống cần test các service có sử dụng giao thức HTTP để giao tiếp với API Backend, chúng ta sử dụng `HttpTestingClientModule` và giả lập HTTP bằng `HttpTestingController`.

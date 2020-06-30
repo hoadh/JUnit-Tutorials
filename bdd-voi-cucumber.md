@@ -282,8 +282,46 @@ Bạn có thể tham khảo lại mã nguồn tại đây: https://github.com/ho
 
 ## Kinh nghiệm triển khai
 
-## Link tham khảo
+### Kịch bản tránh phụ thuộc UI
 
+Ví dụ không tốt:
+
+```gherkin
+# BAD EXAMPLE! Do not copy.
+Feature: Google Searching
+
+  Scenario: Google Image search shows pictures
+    Given the user opens a web browser
+    And the user navigates to "https://www.google.com/"
+    When the user enters "panda" into the search bar
+    Then links related to "panda" are shown on the results page
+    When the user clicks on the "Images" link at the top of the results page
+    Then images related to "panda" are shown on the results page
+    
+# Nguồn: https://automationpanda.com/2017/01/30/bdd-101-writing-good-gherkin/
+```
+
+Với tình huống trên, khi lập trình viên thay đổi mã giao diện ("Images" link) thì đặc tả kịch bản phải cập nhật lại. Vì vậy, để viết kịch bản thì chúng ta nên sử dụng ngôn ngữ hướng người dùng, đặc tả ở mức cao (high-level), tránh quá chi tiết và phụ thuộc vào thành phần giao diện như ví dụ trên.
+
+### Áp dụng Page Object Model
+
+Page Object Model (POM) là một design pattern phổ biến trong Automation testing. Việc sử dụng POM đảm bảo tính tổ chức và tái sử dụng mã kiểm thử, nhờ đó mã nguồn dễ mở rộng và dễ bảo trì hơn.
+
+Thay vì truy cập trực tiếp các DOM thông qua WebDriver như đã làm ở các ví dụ trên, chúng ta tạo các class bao đóng thành phần giao diện bên trong. Vì thế:
+
+* Thay đổi trong giao diện không ảnh hưởng quá nhiều đến định nghĩa thao tác
+* Có thể tái sử dụng giao diện khi có kịch bản mới
+* Các trang phức tạp có thể được cấu trúc thành nhiều page object nhỏ hơn
+
+Bạn có thể tham khảo mã nguồn được refactor theo POM tại đây: https://github.com/hoadh/demo-todo-list-cucumber-js/tree/refactor
+
+## Chặng đường tiếp theo
+
+Cảm ơn bạn đã đồng hành cùng bài viết đến đây. Hy vọng nội dung bài viết này có thể giúp bạn có được cái nhìn tổng quan về áp dụng BDD với Cucumber.
+
+Tiếp theo, để tăng thêm hiểu biết về BDD và Cucumber, tác giả bài viết gợi ý một số tài nguyên dưới đây:
+
+* Cucumber School: https://cucumber.io/school/
 * Tài liệu Cucumber framework https://cucumber.io/docs/guides/
 * Cú pháp Gherkin https://cucumber.io/docs/gherkin/
 * Thư viện Chaijs https://www.chaijs.com/
